@@ -6,7 +6,12 @@
 #include "player.hpp"
 #include "settings.hpp"
 
-Player::Player() {}
+Player::Player()
+{
+    Image playerIcon = LoadImage("resources/player.png");
+    playerIconT = LoadTextureFromImage(playerIcon);
+    UnloadImage(playerIcon);
+}
 
 void Player::update()
 {
@@ -30,7 +35,15 @@ void Player::update()
 }
 
 void Player::render()
-{
+{   
     Rectangle playerRect = {pos.x, pos.y, 40,40};
-    DrawRectanglePro(playerRect, {playerRect.width/2, playerRect.height/2}, rotation, RED);
+    DrawTexturePro
+    (
+        playerIconT,
+        (Rectangle){0,0, (float)playerIconT.width, (float)playerIconT.height},
+        playerRect,
+        {20,20},
+        rotation+90,
+        RED
+    );
 }

@@ -21,7 +21,7 @@ HideCursor();
 Player player;
 std::vector<bullet> bullets;
 
-// Crosshair loading as a texture.
+// Crosshair loading as a texture. (Crosshair path stated in settings.hpp)
 Image crosshair = LoadImage("resources/crosshair.png");
 ImageResize(&crosshair, 32,32);
 Texture2D crosshairT = LoadTextureFromImage(crosshair);

@@ -24,6 +24,8 @@ class Player
 
     private:
 
+    Texture2D playerIconT;
+
 };
 
 
