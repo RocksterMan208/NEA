@@ -30,4 +30,8 @@ clean:
 run: $(TARGET)
 	./$(TARGET)
 
+reset: clean run
+	
+
+
 .PHONY: all clean run

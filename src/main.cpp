@@ -14,6 +14,11 @@ int main()
 {
 //Initialising the window to allow for rendering.
 InitWindow(screenWidth,screenHeight,"Shooter");
+
+// Obtaining the monitor number as int then setting the target fps to be the refresh rate of the monitor.
+int monitor = GetCurrentMonitor();
+float fps = GetMonitorRefreshRate(monitor);
+
 SetTargetFPS(fps);
 HideCursor();
 
@@ -22,7 +27,7 @@ Player player;
 std::vector<bullet> bullets;
 
 // Crosshair loading as a texture. (Crosshair path stated in settings.hpp)
-Image crosshair = LoadImage("resources/crosshair.png");
+Image crosshair = LoadImage(crosshairIconPath.c_str());
 ImageResize(&crosshair, 32,32);
 Texture2D crosshairT = LoadTextureFromImage(crosshair);
 UnloadImage(crosshair);
@@ -37,11 +42,10 @@ while (!WindowShouldClose())
     player.update();
 
     // Processes thye firing input for the bullets and the player
-    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) | IsKeyPressed(KEY_SPACE))
     {
         bullet b;
         b.rotation = -player.rotation;
-        b.size = {10,10};
         
         // Ensuring that the bullet will ALWAYS be fired from the players current position.
         b.pos = player.pos;
@@ -54,7 +58,14 @@ while (!WindowShouldClose())
         bullets.push_back(b);
     }
 
-    for (auto &bullet : bullets) bullet.pos += bullet.speed * dt;
+    for (auto &bullet : bullets)
+    {
+        bullet.pos += bullet.speed * dt;
+        if (bullet.pos.x > GetScreenWidth()+50 || bullet.pos.y > GetScreenHeight()+50 || bullet.pos.x < -50 || bullet.pos.y < -50)
+        {
+            bullets.erase(bullets.begin());
+        }
+    }
     
     // Initiating the rendering loop
     BeginDrawing();
@@ -62,6 +73,7 @@ while (!WindowShouldClose())
     
     for (auto &b : bullets) b.render();
     player.render();
+
 
     // Drawing the crosshair.
     DrawTexture(crosshairT, GetMousePosition().x - crosshairT.width/2, GetMousePosition().y - crosshairT.height/2, WHITE);

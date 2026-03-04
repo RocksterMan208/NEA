@@ -40,7 +40,7 @@ struct bullet
 
     void render()
     {
-        Rectangle square = {pos.x, pos.y, 10,10};
-        DrawRectanglePro(square, {5,5}, -rotation, PURPLE);
+        Rectangle square = {pos.x, pos.y, bulletWidth, bulletHeight};
+        DrawRectanglePro(square, {bulletWidth/2, bulletHeight/2}, -rotation, GRAY);
     }
 };

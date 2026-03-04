@@ -8,7 +8,7 @@
 
 Player::Player()
 {
-    Image playerIcon = LoadImage("resources/player.png");
+    Image playerIcon = LoadImage(playerIconPath.c_str());
     playerIconT = LoadTextureFromImage(playerIcon);
     UnloadImage(playerIcon);
 }
