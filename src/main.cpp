@@ -12,6 +12,7 @@
 
 int main()
 {
+
 //Initialising the window to allow for rendering.
 InitWindow(screenWidth,screenHeight,"Shooter");
 
@@ -76,7 +77,7 @@ while (!WindowShouldClose())
 
 
     // Drawing the crosshair.
-    DrawTexture(crosshairT, GetMousePosition().x - crosshairT.width/2, GetMousePosition().y - crosshairT.height/2, WHITE);
+    DrawTexture(crosshairT, GetMousePosition().x - crosshairT.width/2, GetMousePosition().y - crosshairT.height/2, BLACK);
 
     // Ending the render loop
     EndDrawing();

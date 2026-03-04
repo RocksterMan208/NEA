@@ -32,20 +32,35 @@ void Player::update()
 
     direction = Vector2Normalize(direction);
 
-    pos.x += direction.x * playerAccel * dt;
-    pos.y += direction.y * playerAccel * dt;
+    if (direction.x == 0) velocity.x *= playerFriction;
+    if (direction.y == 0) velocity.y *= playerFriction;
+
+    velocity += direction * playerAccel * dt;
+
+    velocity.x = Clamp(velocity.x, -playerMaxSpeed, playerMaxSpeed);
+    velocity.y = Clamp(velocity.y, -playerMaxSpeed, playerMaxSpeed);
+
+    pos += velocity * dt;
+
+    if (IsKeyPressed(KEY_T)) health -= 10;
 }
 
 void Player::render()
 {   
     Rectangle playerRect = {pos.x, pos.y, 40,40};
+    
     DrawTexturePro
     (
         playerIconT,
         {0,0, (float)playerIconT.width, (float)playerIconT.height},
-        playerRect,
+        (Rectangle)playerRect,
         {20,20},
         rotation+90, // Offset by 90 degrees to ensure correct rotation of the texture.
         RED
     );
+
+    DrawRectangleV({pos.x-20, pos.y+30}, {40, 5}, RED);
+    DrawRectangleV({pos.x-20, pos.y+30}, {(health*(40.0f/100.0f)), 5}, GREEN);
+
+    DrawTextEx(defaultFont, "Bullets: Infinite", {0,0}, 24, 1, BLACK);
 }

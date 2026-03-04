@@ -13,6 +13,7 @@ class Player
     public:
         Vector2 pos = {screenWidth/2,screenHeight/2};
         Vector2 direction = {0,0};
+        Vector2 velocity = {0,0};
 
         int rotation = 0;
 
@@ -23,6 +24,10 @@ class Player
         void shoot();
 
     private:
+
+    float health = 100;
+
+     Font defaultFont = LoadFont(fontPath.c_str());
 
     Texture2D playerIconT;
 
